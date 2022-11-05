@@ -8,7 +8,7 @@ from machine import Pin
 
 led = Pin("LED", Pin.OUT)
 
-essid = 'JOIN ¯\_(ツ)_/¯ ME'
+essid = '╭∩╮（︶︿︶）╭∩╮'
 
 ap = network.WLAN(network.AP_IF)
 ap.config(essid=essid, security=0)
