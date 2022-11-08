@@ -37,17 +37,17 @@ more about.
 ## What does it look like?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg01.png" alt="PicoGopher server"/>
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg01.jpg" alt="PicoGopher server"/>
   Browsing a gopherhole while keeping its server in your hand
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg02.png" alt="PicoGopher's WiFi essid"/>
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg02.jpg" alt="PicoGopher's WiFi essid"/>
   PicoGopher's WiFi essid
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg03.png" alt="PicoGopher bomb-looking edition"/>
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg03.jpg" alt="PicoGopher bomb-looking edition"/>
   PicoGopher "bomb-looking" edition: the good news is that PG runs on AAA batteries; the bad one is you might not be able to bring it on a flight ;-).
 </p>
 
