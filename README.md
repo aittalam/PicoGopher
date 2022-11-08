@@ -52,7 +52,7 @@ more about.
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg04.png" alt="PicoGopher serving Gopher and HTTP protocols"/>
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg04.jpg" alt="PicoGopher serving Gopher and HTTP protocols"/>
   From v1.0, PicoGopher can serve the same gopherhole both as Gopher and HTTP: here is a side-to-side comparison with Chrome and Lagrange.
 </p>
 
