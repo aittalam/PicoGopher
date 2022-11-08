@@ -65,7 +65,7 @@ are very tiny ones...). In the `/phlog` folder you can find the code I refer
 to in the first three posts I wrote.
 
 Of course everything I wrote is published on Gopher :-). You can find it at
-[gopher.3564020356.org](gopher://gopher.3564020356.org) (if you do not have
+[gopher://gopher.3564020356.org](gopher://gopher.3564020356.org) (if you do not have
 a Gopher browser you can connect [here](https://gopher.floodgap.com/gopher/gw?a=gopher%3A%2F%2Fgopher.3564020356.org)).
 
 
