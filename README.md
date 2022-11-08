@@ -34,6 +34,29 @@ described in James Tomasino's talk
 recent, super interesting protocol and another completely new world to learn
 more about.
 
+## What does it look like?
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg01.png" alt="PicoGopher server"/>
+  Browsing a gopherhole while keeping its server in your hand
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg02.png" alt="PicoGopher's WiFi essid"/>
+  PicoGopher's WiFi essid
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg03.png" alt="PicoGopher bomb-looking edition"/>
+  PicoGopher "bomb-looking" edition: the good news is that PG runs on AAA batteries; the bad one is you might not be able to bring it on a flight ;-).
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aittalam/PicoGopher/master/img/pg04.png" alt="PicoGopher serving Gopher and HTTP protocols"/>
+  From v1.0, PicoGopher can serve the same gopherhole both as Gopher and HTTP: here is a side-to-side comparison with Chrome and Lagrange.
+</p>
+
+
 ## Will there be a PicoGemini?
 
 Most likely yes... Especially if you don't expect me to be the one who 
@@ -58,7 +81,7 @@ After joining the AP, one can browse your gopherhole contents by connecting
 to [gopher://192.168.4.1](gopher://192.168.4.1).
 
 
-# Creating PicoGopher
+# Building PicoGopher from scratch
 
 I am trying to document the steps that brought me to zero to pico (yeah they 
 are very tiny ones...). In the `/phlog` folder you can find the code I refer
@@ -69,4 +92,13 @@ Of course everything I wrote is published on Gopher :-). You can find it at
 a Gopher browser you can connect [here](https://gopher.floodgap.com/gopher/gw?a=gopher%3A%2F%2Fgopher.3564020356.org)).
 
 
+# Updates
 
+- 20221108: you can now stop installing Gopher clients on your friends' devices
+(I mean you should still do it, but you do not have to anymore): PicoGopher now
+supports an experimental HTTP endpoint, so your gopherhole is served both through
+Gopher and HTTP
+
+- 20221105: PicoGopher Elon Edition is out (see the [diff](https://github.com/aittalam/PicoGopher/commit/d618f2f0091542845bd250a0b85141aaa5246cb7))
+
+- 20221031: PicoGopher is featured on [Hackster.io](https://www.hackster.io/news/davide-eynard-s-picogopher-puts-a-90s-network-protocol-on-a-raspberry-pi-pico-w-and-in-a-backpack-dd3cc41995a6)
