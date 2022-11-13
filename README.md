@@ -84,7 +84,7 @@ to [gopher://192.168.4.1](gopher://192.168.4.1).
 # Building PicoGopher from scratch
 
 I am trying to document the steps that brought me to zero to pico (yeah they 
-are very tiny ones...). In the `/phlog` folder you can find the code I refer
+are very tiny ones...). In the `/phlog_code` folder you can find the code I refer
 to in the first three posts I wrote.
 
 Of course everything I wrote is published on Gopher :-). You can find it at
