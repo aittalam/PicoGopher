@@ -71,7 +71,9 @@ run it:
 - make sure you have [micropython](https://micropython.org/download/rp2-pico-w/)
 flashed onto your Pico
 - add your gopherhole to the `/gopher` folder on the Pico (e.g. using
-  [Thonny](https://thonny.org/)'s file manager)
+  [Thonny](https://thonny.org/)'s file manager). Do not worry if you do not have a
+  gopherhole yet! You can get started by copying on the Pico the `/gopher` example
+  which is provided in this repo, then edit its files to customize it :-)
 - copy the four python files in the root folder on the Pico
 - connect the Pico to a power source: it will automatically start running
   the code in `main.py`.
@@ -94,8 +96,15 @@ a Gopher browser you can connect [here](https://gopher.floodgap.com/gopher/gw?a=
 
 # Updates
 
+- 20221113: PicoGopher now comes with its own (super experimental) PicoDNS, so
+you can build a captive portal with it (TL/DR: those who join your WiFi will not
+need to know the IP address of your gopherhole, but they will automatically be
+redirected to it). Also, for those willing to get started with their very first
+gopherhole, a template has been added to the `gopher` folder: just copy it to
+your Pico and then start customizing it!
+
 - 20221108: you can now stop installing Gopher clients on your friends' devices
-(I mean you should still do it, but you do not have to anymore): PicoGopher now
+(I mean you should still do it, but you do not *have to* anymore!): PicoGopher now
 supports an experimental HTTP endpoint, so your gopherhole is served both through
 Gopher and HTTP
 

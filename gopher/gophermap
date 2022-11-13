@@ -1,0 +1,24 @@
+        ____  _            ______            __             
+       / __ \(_)________  / ____/___  ____  / /_  ___  _____
+      / /_/ / / ___/ __ \/ / __/ __ \/ __ \/ __ \/ _ \/ ___/
+     / ____/ / /__/ /_/ / /_/ / /_/ / /_/ / / / /  __/ /    
+    /_/   /_/\___/\____/\____/\____/ .___/_/ /_/\___/_/     
+                                  /_/                       
+
+
+            Welcome to your PicoGopher server!
+
+
+This is your homepage, pointing to all the contents published in 
+your gopherhole. You can customize it by editing the `gophermap`
+file contained in the `gopher` folder (if you like ASCII art as
+much as I do, you can also build your own custom banners using 
+FIGlet (you can download it from http://figlet.org or use the
+web tool at https://manytools.org/hacker-tools/ascii-banner).
+
+Here follow a few links to different resources:
+
+ ==== Menu ====
+0About me (a link to a text file)	about
+1Phlog (a link to a directory)	phlog
+hRead this gopherhole in your Web browser (HTTP server required!)	URL:http://192.168.4.1
