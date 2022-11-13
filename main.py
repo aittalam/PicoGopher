@@ -7,6 +7,7 @@ import uasyncio as asyncio
 
 from picogopher import PicoGopher
 from picohttp import PicoHTTP
+from picodns import run_dns_server
 
 from machine import Pin
 
@@ -22,9 +23,12 @@ wifi_password = None
 http_port = 80
 gopher_port = 70
 
-# enable the experimental HTTP server
-enable_http_server = False
+# enable HTTP server - experimental
+enable_http_server = True
 
+# enable captive portal - SUPER experimental :-)
+enable_captive_portal = False
+SERVER_IP = '192.168.4.1'
 
 # ----------------------------------------------
 
@@ -61,6 +65,11 @@ async def main():
         http_server = PicoHTTP(fqdn, http_port)
         asyncio.create_task(asyncio.start_server(http_server.listener, "0.0.0.0", http_port))
         print('    HTTP')
+
+    if enable_captive_portal:
+        asyncio.create_task(run_dns_server(SERVER_IP))
+        print('    DNS')
+
 
     print('[i] Ready.')
 

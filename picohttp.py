@@ -75,7 +75,10 @@ class PicoHTTP:
             relative = selector[1:]
         else:
             relative = ""
-            
+
+        if relative == "hotspot-detect.html":
+            relative = ""
+
         absolute_path = "/gopher/" + relative
         print("Absolute path: {}".format(absolute_path))
         
@@ -129,7 +132,7 @@ class PicoHTTP:
                     response_line = f"{line}"
                 elif len(cols) == 2:
                     ### SUPER EARLY IMPLEMENTATION!
-                    # - does not work with http URLs
+                    # - does not handle http URLs properly
                     # - does not work with links to external gopherholes
                     ident = cols[0][0]
                     text = cols[0][1:]
