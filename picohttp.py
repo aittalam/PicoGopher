@@ -76,8 +76,11 @@ class PicoHTTP:
         else:
             relative = ""
 
+        # this is a quick hack to fix Mac/IOS' requests
+        # intercepted by the captive portal
         if relative == "hotspot-detect.html":
             relative = ""
+            selector = "/"
 
         absolute_path = "/gopher/" + relative
         print("Absolute path: {}".format(absolute_path))
