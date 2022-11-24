@@ -101,12 +101,31 @@ class PicoHTTP:
             writer.write('HTTP/1.0 200 OK\r\nContent-type: text/plain\r\n\r\n')
             # I got some memory errors with 64KB blocks,
             # so I am keeping them tiny for now
-            block_size = 16 * 1024
+            block_size = 1 * 1024
+            
+            # preallocate a buffer of block_size to load data into
+            buf = bytearray(block_size)
+
             with open(absolute_path, 'rb') as inf:
-                data = inf.read(block_size)
-                while len(data) > 0:
-                    writer.write(data)
-                    data = inf.read(block_size)
+                bytes_read = inf.readinto(buf)
+                while bytes_read == block_size :
+                    try:
+                        writer.write(buf)
+                    except MemoryError as e:
+                        # happens (also) when out_buf gets too
+                        # large, so let us drain and retry
+                        print(f"[w] {e} => will drain and retry")
+                        await writer.drain()
+                        writer.write(buf)
+
+                    # read next chunk into buf
+                    bytes_read = inf.readinto(buf)
+
+                # finally, write the remaining bytes
+                # (note that there's a chance we'll get
+                # a MemoryError here too...)
+                writer.write(buf[:bytes_read])
+
             await writer.drain()
             await writer.wait_closed()
 
