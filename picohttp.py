@@ -56,9 +56,9 @@ class PicoHTTP:
         print("Request:", request_line)
 
         if not request.startswith('GET'):
-            error = "Only GET requests allowed"
+            error = "Only GET requests allowed\r\n"
             print(f"HTTP error: {error}")
-            writer.write('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
+            writer.write('HTTP/1.0 405 Method Not Allowed\r\nContent-type: text/plain\r\n\r\n')
             writer.write(error)
             await writer.drain()
             await writer.wait_closed()
@@ -86,9 +86,9 @@ class PicoHTTP:
         print("Absolute path: {}".format(absolute_path))
         
         if invalid_path(absolute_path):
-            error = f"Invalid path: {absolute_path}"
+            error = f"Invalid path: {absolute_path}\r\n"
             print(f"HTTP error: {error}")
-            writer.write('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
+            writer.write('HTTP/1.0 404 Not Found\r\nContent-type: text/plain\r\n\r\n')
             writer.write(error)
             await writer.drain()
             await writer.wait_closed()
