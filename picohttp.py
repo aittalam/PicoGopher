@@ -160,7 +160,12 @@ class PicoHTTP:
                     text = cols[0][1:]
                     ref = cols[1]
 
-                    print("***", ref)
+                    # parse HTTP links
+                    if ident == 'h' and ref.startswith("URL:"):
+                        ref = ref[4:]
+
+#                     print(f"{ident} - {ref}")
+
                     # fix relative paths
                     if ref[0] != '/' and selector != "/":
                         ref = '{}/{}'.format(selector, ref)
@@ -174,7 +179,7 @@ class PicoHTTP:
                 
             outln.append("</span></body></html>")
             response = response + '\r\n'.join(outln)
-            print(response)
+#             print(response)
             writer.write('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
             writer.write(response)
             writer.write('\r\n')
