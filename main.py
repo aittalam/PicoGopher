@@ -118,6 +118,9 @@ async def main():
 
     print('[i] Ready.')
 
+    # used to detect a system restart (e.g. for logging)
+    just_started = True
+
     while True:
         # blink led
         onboard.on()
@@ -138,6 +141,9 @@ async def main():
                             voltage, percentage)
 
                 with open(power_log_file, "a") as f:
+                    if just_started:
+                        f.write("=== System restarted ===\n")
+                        just_started = False
                     f.write(message)
                 print(message, end="")
 
