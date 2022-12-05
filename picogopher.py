@@ -115,7 +115,7 @@ class PicoGopher:
                 outln.append('\t'.join(cols))
                 
             response = '\r\n'.join(outln)
-            print(response)
+#             print(response)
             writer.write(response)
             writer.write('\r\n.\r\n')
             await writer.drain()
