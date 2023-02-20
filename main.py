@@ -5,7 +5,7 @@ import errno
 import os
 import uasyncio as asyncio
 
-from picodisplay import PicoDisplay
+# from picodisplay import PicoDisplay
 from picopower import PicoPower
 from picogopher import PicoGopher
 from picohttp import PicoHTTP
@@ -51,14 +51,22 @@ conversion_factor = 2 * 3.3 / 65535
 # Reference voltages for a full/empty battery, in volts
 # NOTE that they could vary by battery size/manufacturer,
 # so you will likely have to adjust them
-full_battery = 3.7
-empty_battery = 2.5
+full_battery = 4.0
+empty_battery = 2.8
+
+# To define the threshold below I have looked at the voltage
+# value that corresponds to ~15' of battery life. If we pass
+# this threshold, we should put the device to sleep and
+# periodically check whether the battery has been recharged
+# enough before we restart it
+battery_powersave_threshold = 3.3
+battery_sleep_time = 1200
 
 # specifies where to log power readings (no logging if None)
 power_log_file = "gopher/picopower.log"
 
 # -- display --
-enable_display = True
+enable_display = False
 
 # ----------------------------------------------
 
@@ -143,13 +151,27 @@ async def main():
                 with open(power_log_file, "a") as f:
                     if just_started:
                         f.write("=== System restarted ===\n")
+                        f.write(f"=== YAWN! Waking up from {machine.reset_cause()} ===\n")
                         just_started = False
                     f.write(message)
+                print(f"=== YAWN! Waking up from {machine.reset_cause()} ===\n")
                 print(message, end="")
 
             # display power reading if display is enabled
             if enable_display:
                 pd.update_voltage(tm, voltage, percentage)
+
+            if voltage < battery_powersave_threshold:
+                message = f"=== Battery level below {battery_powersave_threshold}V threshold:"
+                message += f" sleeping for {battery_sleep_time} seconds...\n"
+                with open(power_log_file, "a") as f:
+                    f.write(message)
+                print(message, end="")
+
+                # TODO: turn the wifi off
+
+                # put the device to sleep for battery_sleep_time seconds
+                machine.deepsleep(1000*battery_sleep_time)
 
         # sleep for a while
         await asyncio.sleep(60)
