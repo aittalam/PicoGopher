@@ -1,4 +1,3 @@
-import network
 import socket
 import time
 import errno
@@ -6,6 +5,7 @@ import os
 import uasyncio as asyncio
 
 # from picodisplay import PicoDisplay
+from picowifi import PicoWiFi
 from picopower import PicoPower
 from picogopher import PicoGopher
 from picohttp import PicoHTTP
@@ -34,7 +34,10 @@ SERVER_IP = '192.168.4.1'
 
 
 # -- battery --
-enable_power_readings = True
+# set the following to True if you want to log battery
+# power and enable automatic deep sleep when battery level
+# is below a given threshold
+enable_power_readings = False
 
 # adc_vin is the pin from which we read the system input voltage
 # (change to 29 for Pico Lipo shim!)
@@ -68,30 +71,13 @@ power_log_file = "gopher/picopower.log"
 # -- display --
 enable_display = False
 
-# ----------------------------------------------
-
-def start_AP(essid, pw):
-    '''
-        Runs as WiFi AP and returns its own IP.
-        Requires WPA2 AES auth if both essid and pw
-        are provided, no auth if pw is None.
-    '''
-    
-    ap = network.WLAN(network.AP_IF)
-    if pw is None:
-        ap.config(essid=essid, security=0)
-    else:
-        ap.config(essid=essid, password=pw)
-
-    ap.active(True)
-    return ap.ifconfig()[0]
-
 
 # --------------- HERE BE MAIN -----------------
 
 async def main():
     print('[i] Connecting to Network...')
-    fqdn = start_AP(wifi_essid, wifi_password)
+    wifi = PicoWiFi()
+    fqdn = wifi.start()
     print(f'    Connection successful: listening on {fqdn}')
 
     print('[i] Starting up servers...')
@@ -141,26 +127,35 @@ async def main():
             voltage = pp.voltage()
             percentage = pp.percentage(voltage)
 
-            # log if enabled
-            if power_log_file is not None:
-                message = '%04d-%02d-%02d %02d:%02d:%02d Lipo voltage: %.2f (%03d%%)\n' % (
+            message = '%04d-%02d-%02d %02d:%02d:%02d Lipo voltage: %.2f (%03d%%)\n' % (
                             tm[0], tm[1], tm[2],
                             tm[3], tm[4], tm[5],
                             voltage, percentage)
 
+            if just_started:
+                if machine.reset_cause == 3:
+                    cause = "deepsleep"
+                else:
+                    cause = "reboot"
+                restart_message = f"=== System restarted (waking up from {cause}) ===\n"
+                print(restart_message, end="")
+
+            print(message, end="")
+        
+            # log if enabled
+            if power_log_file is not None:
                 with open(power_log_file, "a") as f:
                     if just_started:
-                        f.write("=== System restarted ===\n")
-                        f.write(f"=== YAWN! Waking up from {machine.reset_cause()} ===\n")
-                        just_started = False
+                        f.write(restart_message)
                     f.write(message)
-                print(f"=== YAWN! Waking up from {machine.reset_cause()} ===\n")
-                print(message, end="")
+
+            just_started = False
 
             # display power reading if display is enabled
             if enable_display:
                 pd.update_voltage(tm, voltage, percentage)
 
+            # put PicoGopher to sleep if power is below threshold
             if voltage < battery_powersave_threshold:
                 message = f"=== Battery level below {battery_powersave_threshold}V threshold:"
                 message += f" sleeping for {battery_sleep_time} seconds...\n"
@@ -168,9 +163,9 @@ async def main():
                     f.write(message)
                 print(message, end="")
 
-                # TODO: turn the wifi off
-
-                # put the device to sleep for battery_sleep_time seconds
+                # turn the wifi off
+                wifi.stop()
+                # deepsleep for battery_sleep_time seconds
                 machine.deepsleep(1000*battery_sleep_time)
 
         # sleep for a while
