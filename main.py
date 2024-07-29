@@ -2,11 +2,13 @@ import socket
 import errno
 import os
 import uasyncio as asyncio
+import ssl
 
 # from picodisplay import PicoDisplay
 from picowifi import PicoWiFi
 from picopower import PicoPower
 from picogopher import PicoGopher
+from picogemini import PicoGemini
 from picohttp import PicoHTTP
 from picodns import run_dns_server
 from config import Config
@@ -38,6 +40,13 @@ async def main():
         http_server = PicoHTTP(server_ip, cfg.HTTP.port)
         asyncio.create_task(asyncio.start_server(http_server.listener, "0.0.0.0", cfg.HTTP.port))
         print('    HTTP')
+
+    if cfg.Gemini.enabled:
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.load_cert_chain(cfg.SSL.cert_file, cfg.SSL.key_file)
+        gemini_server = PicoGemini(server_ip, cfg.Gemini)
+        asyncio.create_task(asyncio.start_server(gemini_server.listener, "0.0.0.0", cfg.Gemini.port, ssl=context))
+        print('    Gemini')
 
     if cfg.CaptivePortal.enabled:
         asyncio.create_task(run_dns_server(server_ip))

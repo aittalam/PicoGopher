@@ -9,16 +9,28 @@ class Config:
         enable_AP = True
 
     class Gopher:
+        # enable Gopher server
         enabled = True
         port = 70
 
     class HTTP:
-        # enable HTTP server - experimental
+        # enable HTTP server
         enabled = True
         port = 80
 
+    class Gemini:
+        # enable GeGoBi server
+        enabled = True
+        port = 1965
+        root_dir = "/oldest-gwit-site/"
+#         root_dir = "/gopher/"
+
+    class SSL:
+        cert_file = "ssl_keys/ec_cert.der"
+        key_file = "ssl_keys/ec_key.der"
+
     class CaptivePortal:
-        # enable captive portal - SUPER experimental :-)
+        # enable captive portal
         enabled = False
     
     

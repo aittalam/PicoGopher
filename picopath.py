@@ -44,8 +44,19 @@ class PicoPath:
 
     def is_dir(self):
         return self.S_ISDIR(self.stat()[0])
-    
-    
+
+    def __truediv__(self, other):
+        if other.startswith("/"):
+            other = other[1:]
+        if self.fname.endswith("/"):
+            return PicoPath(self.fname + other)
+        else:
+            return PicoPath(self.fname + "/" + other)
+
+    def __str__(self):
+        return self.fname
+
+
 def invalid_path(absolute_path):
     '''
         Returns True if the provided absolute path is NOT valid.
@@ -65,15 +76,20 @@ def invalid_path(absolute_path):
         return True
 
     path_abs = PicoPath(absolute_path)
-    path_gmap = PicoPath(absolute_path + '/gophermap')
-            
+    path_gmap = path_abs / 'gophermap'
+    path_gmi = path_abs / 'index.gmi'
+    path_gmi2 = path_abs / 'index.gemini'
+
     if not path_abs.exists():
         print('Error: attempt to access nonpublic path: {}'.format(absolute_path))
         return True
-
     elif path_abs.is_file():
         return False
-    elif (path_abs.is_dir() and path_gmap.exists() and path_gmap.is_file()):
+    elif (path_abs.is_dir() and
+          (path_gmap.exists() and path_gmap.is_file()) or
+          (path_gmi.exists() and path_gmi.is_file()) or
+          (path_gmi2.exists() and path_gmi2.is_file())
+          ):
         return False
 
     print('Error: attempt to access something weird: {}'.format(absolute_path))
